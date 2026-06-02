@@ -4,7 +4,8 @@ services:
     runtime: docker
     plan: free
     rootDir: trig_essalama
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./Dockerfile
+    dockerCommand: ""
     envVars:
       - key: APP_ENV
         value: production
