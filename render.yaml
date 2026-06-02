@@ -4,8 +4,8 @@ services:
     runtime: docker
     plan: free
     rootDir: trig_essalama
-    dockerfilePath: ./Dockerfile
-    dockerCommand: ""
+    dockerfilePath: trig_essalama/Dockerfile
+    dockerContext: trig_essalama
     healthCheckPath: /health.php
     envVars:
       - key: APP_ENV
