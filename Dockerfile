@@ -16,11 +16,11 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
+COPY trig_essalama/composer.json trig_essalama/composer.lock ./
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader --no-scripts
 
-COPY . .
+COPY trig_essalama/ .
 RUN composer dump-autoload --optimize \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
