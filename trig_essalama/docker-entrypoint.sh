@@ -3,18 +3,19 @@ set -e
 
 cd /var/www/html
 
-if [ ! -f vendor/autoload.php ]; then
-    echo "[entrypoint] vendor/autoload.php missing — running composer install..."
-    composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader --no-scripts
-    composer dump-autoload --optimize
-fi
+echo "[entrypoint] Ensuring Composer dependencies..."
+composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader --no-scripts
+composer dump-autoload --optimize
 
 if [ ! -f vendor/autoload.php ]; then
     echo "[entrypoint] FATAL: vendor/autoload.php still missing after composer install."
+    ls -la
+    ls -la vendor 2>/dev/null || true
     exit 1
 fi
 
-# Render forwards traffic to $PORT (default 10000), not 80.
+echo "[entrypoint] vendor/autoload.php OK"
+
 PORT="${PORT:-10000}"
 export PORT
 
