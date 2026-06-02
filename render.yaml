@@ -6,6 +6,7 @@ services:
     rootDir: trig_essalama
     dockerfilePath: ./Dockerfile
     dockerCommand: ""
+    healthCheckPath: /health.php
     envVars:
       - key: APP_ENV
         value: production
