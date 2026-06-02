@@ -1,35 +1,14 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
+RUN apt-get update && apt-get install -y \
+    git unzip curl libpq-dev libzip-dev zip
 
+RUN docker-php-ext-install pdo pdo_mysql zip
 
-RUN apt-get update && apt-get install -y 
-
-git unzip curl libpq-dev libzip-dev zip
-
-
-
-RUN docker-php-ext-install pdo pdo_pgsql pdo_mysql zip
-
-
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-
-
-WORKDIR /app
-
-
+WORKDIR /var/www/html
 
 COPY . .
 
+RUN chown -R www-data:www-data /var/www/html
 
-
-RUN composer install
-
-
-
-EXPOSE 10000
-
-
-
-CMD php artisan serve --host=0.0.0.0 --port=10000
+EXPOSE 80
